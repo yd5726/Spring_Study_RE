@@ -21,8 +21,10 @@
 	</form>
 	<script>
 		function fn_submit(f){
+			var name = f.name.value;
 			//action="joinPath/홍길동/남/hong@naver.com"
-			f.action ="joinPath/" + f.name.value + "/" + f.gender.value + "/" + f.email.value;
+			f.action ="joinPath/" + name + "/" 
+			+ f.gender.value + "/" + f.email.value;
 		}
 	</script>
 </body>
