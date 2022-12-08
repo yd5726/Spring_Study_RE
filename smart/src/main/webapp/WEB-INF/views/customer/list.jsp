@@ -19,11 +19,16 @@
 			<th>전화번호</th>
 			<th>이메일</th>
 		</tr>
-		<tr><td></td>
-			<td></td>
-			<td></td>
-		</tr>
+		<c:forEach items='${list}' var="vo">
+			<tr><td><a href='info.cu?id=${vo.id}'>${vo.name}</a></td>
+				<td>${vo.phone}</td>
+				<td>${vo.email}</td>
+			</tr>
+		</c:forEach>
 	</table>
+	<div class='btnSet'>
+		<a class='btn-fill' href='new.cu'>고객등록</a>
+	</div>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 </body>
 </html>

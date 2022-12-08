@@ -1,5 +1,5 @@
 package customer;
-
+/* DB : hanul */
 public class CustomerVO {
 	private int id;
 	private String name, email, phone, gender;

@@ -4,16 +4,28 @@ body {
 	text-align: center;
 	min-width: 1280px;
 }
+
 ul { list-style-type: none; align-items: center; padding: 0 }
+
+a { cursor: pointer; }
+
 a:link, a:visited { text-decoration: none; color: inherit; }
+
 table { 
 	border-collapse: collapse;
-	margin: 0 auto;
+	margin: 10px auto;
 }
+
 table tr { height: 46px; }
+
 table.tb-list tr { height: 38px; }
+
 table th, table td { border: 1px solid #b0b0b0; }
+
 table th { background-color: #f6f6f6; }
+/* table th { background-color: red; } */	/*header.jsp 참고 : 버전 변경 필요*/
+
+table a:hover { font-weight: bold; text-decoration: underline; }
 
 select {
 	height: 34px;
@@ -23,6 +35,40 @@ select {
 
 div.btnSet { margin: 20px auto; }
 
+a.btn-fill, a.btn-empty{
+	display: inline-block;
+	height: 24px;
+	padding: 3px 15px;
+	border: 1px solid #3367d6;
+	border-radius: 3px;
+}
+
+a.btn-fill{
+	background-color: #3367d6;
+	color: #fff;
+}
+
+a.btn-empty{
+	background-color: #fff;
+	color: #3367d6;
+}
+
+input{
+	height: 30px;
+	padding: 0 10px;
+	font-size: 16px;	
+}
+
+label:not(:first-child){ margin-left: 20px; }
+
+input[type=radio]{
+	width: 18px;
+	margin: 0 5px 2px;
+	vertical-align: middle;
+}
+
+input:focus{ outline: none; border: 1px solid #3367d6; }
+
 .box {
 	width: 300px;
 	margin: 20px auto;
@@ -31,6 +77,7 @@ div.btnSet { margin: 20px auto; }
 }
 
 .box li { margin: 10px 0; }
+
 .box input { width: 100%; }
 
 .center { 

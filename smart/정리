@@ -1,0 +1,6 @@
+Controller 에서는 Service의 method 호출
+Service 에서는 DAO의 method 호출
+DAO 에서는 mapper 의 태그 지정
+
+웹브라우저에서 주소요청 -> Controller -> Service -> DAO -> mapper
+화면으로 응답         <-            <-          <-    <-      
