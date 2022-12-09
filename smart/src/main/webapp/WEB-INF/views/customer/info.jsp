@@ -7,7 +7,7 @@
 	<title>info</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	<%-- <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include> --%>
 	
 	<h3>고객정보</h3>
 	
@@ -69,6 +69,6 @@
 		});	
 	</script>
 	
-	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+	<%-- <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include> --%>
 </body>
 </html>

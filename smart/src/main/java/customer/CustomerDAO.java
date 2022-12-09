@@ -3,6 +3,7 @@ package customer;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Qualifier;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +17,7 @@ public class CustomerDAO implements CustomerService{
 	//@Autowired private SqlSession sql;  // SqlSession 객체 담기, 내부 자원 회수 안해도 됨
 	// 방법 2. 생성자
 	private SqlSession sql;
-	public CustomerDAO(SqlSession sql) {
+	public CustomerDAO(@Qualifier("hanul") SqlSession sql) {
 		this.sql = sql;
 	}
 

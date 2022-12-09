@@ -7,7 +7,7 @@
 	<title>list</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	<%-- <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include> --%>
 	<h3>고객목록</h3>
 	<table class='tb-list w-px600'>
 		<colgroup>
@@ -29,6 +29,6 @@
 	<div class='btnSet'>
 		<a class='btn-fill' href='new.cu'>고객등록</a>
 	</div>
-	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+	<%-- <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include> --%>
 </body>
 </html>

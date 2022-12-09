@@ -23,12 +23,20 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2"></beans:property>
 	</beans:bean>
 	
 	<!-- 스캐닝 대상이 되도록 선언 : root-context.xml로 customer 선언-->
 	<!-- <context:component-scan base-package="co.kr.smart, customer" /> -->
 	<context:component-scan base-package="co.kr.smart" />
 	
-	
+	<!-- tiles 사용하겠다고 선언 -->
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+		<beans:property name="order" value="1"></beans:property>
+	</beans:bean>
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions" 
+						value="/WEB-INF/views/tiles/config.xml"/>
+	</beans:bean>
 	
 </beans:beans>

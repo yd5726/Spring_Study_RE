@@ -76,6 +76,15 @@ input:focus{ outline: none; border: 1px solid #3367d6; }
 	padding: 30px 50px;	
 }
 
+/* 테이블 스크롤 생성 */
+.tb-wrap{
+	overflow-y: auto;
+	height: 544px;
+	margin: 0 auto; 
+}
+
+.tb-wrap .tb-list{ width: 100%; }
+
 .box li { margin: 10px 0; }
 
 .box input { width: 100%; }

@@ -7,7 +7,7 @@
 	<title>new</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	<%-- <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include> --%>
 	<h3>신규 고객 등록</h3>
 	<form method="post" action="insert.cu">
 		<table class='tb-list w-px600'>
@@ -31,6 +31,6 @@
 		<a class='btn-fill' onclick="$('form').submit()">저장</a>
 		<a class='btn-empty' href='list.cu'>취소</a>
 	</div>
-	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+	<%-- <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include> --%>
 </body>
 </html>

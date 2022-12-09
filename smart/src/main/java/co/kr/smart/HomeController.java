@@ -1,6 +1,6 @@
 package co.kr.smart;
 
-import java.util.Locale;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +18,10 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		
+	public String home(HttpSession session, Model model) {
+		/* 해당 카테고리 변화 */
+		//session.setAttribute("category", "");
+		session.removeAttribute("category");
 		return "home";
 	}
 	

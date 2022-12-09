@@ -7,7 +7,7 @@
 	<title>modify</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	<%-- <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include> --%>
 	<h3>고객정보수정</h3>
 	<form method="post" action="update.cu">
 		<input type='hidden' name='id' value='${vo.id}'>
@@ -34,6 +34,6 @@
 		<a class='btn-fill'onclick="$('form').submit()">저장</a>
 		<a class='btn-empty' href='info.cu?id=${vo.id}'>취소</a>
 	</div>
-	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+	<%-- <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include> --%>
 </body>
 </html>
