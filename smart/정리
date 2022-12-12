@@ -1,6 +1,6 @@
 Controller 에서는 Service의 method 호출
 Service 에서는 DAO의 method 호출
-DAO 에서는 mapper 의 태그 지정
+DAO 에서는 mapper의 태그 지정
 
 웹브라우저에서 주소요청 -> Controller -> Service -> DAO -> mapper
 화면으로 응답         <-            <-          <-    <-      
@@ -46,7 +46,7 @@ Mybatis 프레임웤을 사용하기 위한 라이브러리
 		    <version>2.0.7</version>
 		</dependency>
 		
-
+=========================1209===============================
 데이터객체(VO,DTO)에 getter,setter 자동생성 라이브러리
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
@@ -70,7 +70,7 @@ Mybatis 프레임웤을 사용하기 위한 라이브러리
 http://apache.org   ->  tiles 검색: Home - Apache Tiles - Framework 클릭
 -> 
 
-============================================================
+=======================tiles 정리===============================
 < tiles 만드는 법>
 	https://apache.org/
 	https://tiles.apache.org/framework/index.html
@@ -82,8 +82,43 @@ http://apache.org   ->  tiles 검색: Home - Apache Tiles - Framework 클릭
 	
 < 이후 설정 > 
 	view 폴더 안에 tiles 폴더 만들고 config.xml과 layout.jsp를 작성한다.
-											
-		
+=========================1212=================================											
+< Log4jdbc-log4j2 사용하기 > - 목적 : sql 가독성 높이기
+1) 라이브러리 추가 : log4jdbc
+	https://mvnrepository.com/search?q=log4jdbc
+	https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1
+	
+<!-- https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1 -->
+<dependency>
+    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+    <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+    <version>1.16</version>
+</dependency>
+
+2) 로그 설정 파일 추가
+< log4jdbc.log4j2.properties 파일 만들어서 밑에 내용 작성 >
+log4jdbc.spylogdelegator.name=net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator
+
+3) JDBC의 연결정보 설정
+< db.properties 내용 수정>
+oracleDriver = net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+url202 = jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
+----------------------------------------------------------------------------
+Cannot find DTD, log4j.dtd 지정된 파일을 찾을 수 없습니다. - 오류 해결 방법
+< log4j.xml 내용 수정 >
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+----------------------------------------------------------------------------
+< log4j.xml 내용 작성 >
+<!-- jdbc sql 확인 -->
+	<logger name="jdbc.sqlonly">
+		<level value="info" />
+	</logger>
+	
+	<logger name="jdbc.resultsettable">
+		<level value="info" />
+	</logger>
+	
+[[[[계속]]]]
 		
 		
 		

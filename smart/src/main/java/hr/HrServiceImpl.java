@@ -9,14 +9,13 @@ import org.springframework.stereotype.Service;
 public class HrServiceImpl implements HrService {
 	//@Autowired private HrDAO dao;
 	private HrDAO dao;
-	public HrServiceImpl(HrDAO hr) {
-		this.dao = hr;
+	public HrServiceImpl(HrDAO dao) {
+		this.dao = dao;
 	}
 	
 	@Override
 	public void employee_insert(EmployeeVO vo) {
-		// TODO Auto-generated method stub
-
+		dao.employee_insert(vo);
 	}
 
 	@Override
@@ -26,20 +25,27 @@ public class HrServiceImpl implements HrService {
 
 	@Override
 	public EmployeeVO employee_info(int employee_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.employee_info(employee_id);
 	}
 
 	@Override
 	public void employee_update(EmployeeVO vo) {
-		// TODO Auto-generated method stub
-
+		dao.employee_update(vo);
 	}
 
 	@Override
 	public void employee_delete(int employee_id) {
-		// TODO Auto-generated method stub
+		dao.employee_delete(employee_id);
+	}
 
+	@Override
+	public List<DepartmentVO> hr_department_list() {
+		return dao.hr_department_list();
+	}
+
+	@Override
+	public List<JobVO> hr_job_list() {
+		return dao.hr_job_list();
 	}
 
 }

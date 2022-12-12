@@ -82,14 +82,12 @@
 			</exclusions>
 			<scope>runtime</scope>
 		</dependency>
-
 		<!-- @Inject -->
 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
-		</dependency>
-				
+		</dependency>			
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -108,7 +106,6 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-	
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -116,7 +113,7 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>     
-		
+			
 		<!-- 오라클 라이브러리 OJDBC -->
 		<!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8 -->
 		<dependency>
@@ -165,13 +162,22 @@
     		<version>1.18.24</version>
     		<scope>provided</scope>
 		</dependency>
+		
+		<!-- tiles : html 레이아웃 만들기 -->
 		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-jsp -->
 		<dependency>
     		<groupId>org.apache.tiles</groupId>
     		<artifactId>tiles-jsp</artifactId>
     		<version>3.0.8</version>
 		</dependency>
-			
+		<!-- log4jdbc : sql 에러 확인 -->
+		<!-- https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1 -->
+		<dependency>
+    		<groupId>org.bgee.log4jdbc-log4j2</groupId>
+    		<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+    		<version>1.16</version>
+		</dependency>
+		
 	</dependencies>
     <build>
         <plugins>

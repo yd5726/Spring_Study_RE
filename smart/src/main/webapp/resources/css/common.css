@@ -22,6 +22,8 @@ table.tb-list tr { height: 38px; }
 
 table th, table td { border: 1px solid #b0b0b0; }
 
+table td {padding-left: 10px; }
+
 table th { background-color: #f6f6f6; }
 /* table th { background-color: red; } */	/*header.jsp 참고 : 버전 변경 필요*/
 
@@ -30,7 +32,8 @@ table a:hover { font-weight: bold; text-decoration: underline; }
 select {
 	height: 34px;
 	cursor: pointer;
-	padding-left: 10px; 	
+	padding-left: 10px;
+	font-size: 16px; 	
 }
 
 div.btnSet { margin: 20px auto; }
