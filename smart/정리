@@ -117,7 +117,52 @@ Cannot find DTD, log4j.dtd 지정된 파일을 찾을 수 없습니다. - 오류
 	<logger name="jdbc.resultsettable">
 		<level value="info" />
 	</logger>
-	
+
+=========================1213=================================
+DB : hanul
+
+< 공지글 관리 >
+create table notice(
+id number,								/*Pk*/
+title varchar2(300), 					/*제목*/
+content varchar2(4000), 				/*내용*/
+writer varchar2(50), 					/*작성자의 userid*/
+writedate date default sysdate, 		/*작성일자*/
+readcnt number default 0, 				/*조회수*/
+constraint notice_id_pk primary key(id)
+);
+
+/*notice 테이블의 pk인 id 컬럼에 적용할 시퀀스 생성*/
+create sequence seq_notice
+start with 1 increment by 1 nocache;
+
+/*데이터 삽입*/
+insert into notice(id,title,content,writer)
+values(seq_notice.nextval,'테스트 공지글','테스트용 공지글입니다','admin');
+
+/*ORA-02291: 무결성 제약조건(HANUL.NOTICE_WRITER_FK)이 위배되었습니다- 부모 키가 없습니다*/
+insert into notice(id,title,content,writer)
+values(seq_notice.nextval,'테스트 공지글','테스트용 공지글입니다','abc');
+
+select * from notice;
+commit;
+
+/*notice 테이블에 데이터행 삽입저장시 pk인 id 컬럼에 시퀀스값 자동적용시킬 트리거 생성*/
+create or replace trigger trg_notice
+	before insert on notice
+	for each row
+begin
+	select seq_notice.nextval into :new.id from dual;
+end;
+/
+
+/*데이터 업데이트*/
+update notice
+set title = #{title}, content =#{content}
+where id = #{id}
+
+
+		
 [[[[계속]]]]
 		
 		
