@@ -19,6 +19,7 @@
 	
 	<script type="text/javascript" 
 			src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+	<script src='js/common.js?<%=new java.util.Date() %>'></script>
 </head>
 <body>
 	<tiles:insertAttribute name="header" />
