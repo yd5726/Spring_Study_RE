@@ -8,11 +8,13 @@ header {
 	align-items: center; 
 	justify-content: space-between;
 	padding: 0 100px;
+	display: flex;
 }
-header nav, header nav ul { display: flex; }
+header nav, header ul { display: flex; }
 header nav ul { font-size: 18px; font-weight: bold; }
 header nav ul li:not(:first-child) { margin-left: 50px; }
 header nav li a.active, header nav li a:hover { color: #0040ff; font-weight: bold; }
+header div li:not(:first-child){ margin-left: 5px; }
 </style>
 <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>  -->
 <header>
@@ -28,4 +30,18 @@ header nav li a.active, header nav li a:hover { color: #0040ff; font-weight: bol
 		<li><a>시각화</a></li>
 	</ul>
 </nav>
+<div>
+	<ul>
+		<!-- 로그인하지 않은 경우 -->
+		<c:if test="${empty loginInfo}">
+			<li><a class='btn-fill' href='login'>로그인</a></li>
+			<li><a class='btn-fill' href='member'>회원가입</a></li>
+		</c:if>
+		<!-- 로그인한 경우 -->
+		<c:if test="${not empty loginInfo}">
+			<li><strong>홍길동</strong></li>
+			<li><a class='btn-fill' href='logout'>로그아웃</a></li>
+		</c:if>
+	</ul>
+</div>
 </header>
