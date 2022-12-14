@@ -27,7 +27,20 @@
 		})
 		function login(){
 			if(emptyCheck()){
-				alert('확인!!!')			
+				$.ajax({
+					url: 'smartLogin',
+					data: { id:$('#userid').val(), pw:$('#userpw').val()},
+					success: function(response){
+						console.log(response);
+						if(response){
+							location = '<c:url value="/"/>';
+						}else{
+							alert('아이디나 비밀번호가 일치하지 않습니다.');
+						}
+					},error: function(req,text){
+						alert(text+':'+req.status);
+					}
+				});	
 			}
 		}
 	</script>	

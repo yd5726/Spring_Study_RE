@@ -7,7 +7,7 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- 스캐닝 대상이 되도록 선언 -->
-	<context:component-scan base-package="customer, hr, notice"></context:component-scan>	
+	<context:component-scan base-package="customer, hr, notice, member, common"></context:component-scan>	
 	
 	<!-- CustomerDAO SqlSession 사용하겠다고 선언 -->
 	<import resource="classpath:dbconn/conn.xml"/>

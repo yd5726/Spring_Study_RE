@@ -161,8 +161,17 @@ update notice
 set title = #{title}, content =#{content}
 where id = #{id}
 
+=========================1214=================================
+/*암호화에 사용할 slat 컬럼 추가*/
+alter table member add(salt varchar2(300));
 
-		
+salt: 비밀번호를 해시 처리하는 "단방향" 함수의 추가 입력에 사용되는 랜덤값 => 단방향이라 복호화가 안됨
+회원가입시 비밀번호를 암호화하고, 암호화에 사용한 salt 와 암호화된 비밀번호를 저장하도록 한다.
+=> 그래서 비번 분실 시 임시 비밀번호 보내줌
+
+       암호화         복호화
+manager -> afalgfhag -> manager
+				
 [[[[계속]]]]
 		
 		
