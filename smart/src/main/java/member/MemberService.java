@@ -24,4 +24,10 @@ public interface MemberService {
 	
 	// 관리자모드에서는 전체 회원목록 조회
 	List<MemberVO> member_list();
+	
+	// 회원의 버번 암호화에 사용한 slat 조회
+	String member_salt(String userid);
+	
+	// 입력한 아이디/이메일이 일치하는 회원
+	String member_userid_email(MemberVO vo);
 }

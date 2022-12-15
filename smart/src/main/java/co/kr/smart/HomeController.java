@@ -27,6 +27,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpSession session, Model model) {
 		//암호화하지 않은 비번에 대해 암호화해서 저장하는 처리----
+		/*
 		  List<MemberVO> list = member.member_list();
 		  for(MemberVO vo : list) {
 			  // 비밀번호가 있는 회원(소셜로그인 아닌 회원)에 대해 암호화에 사용할 salt를 만든다.
@@ -39,6 +40,7 @@ public class HomeController {
 				  member.member_myInfo_update(vo);
 			  }
 		  }
+		*/
 		//------------------------------------------
 		
 		/* 해당 카테고리 변화 */

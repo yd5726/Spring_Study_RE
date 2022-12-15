@@ -3,18 +3,18 @@
 <!-- <link href="resources/css/common.css" rel="stylesheet" type="text/css"> -->
 <%-- <link href="css/common.css?<%=new java.util.Date() %>" rel="stylesheet" type="text/css"> --%>
 <style>
-header {
-	border-bottom: 1px solid #aaa;
-	align-items: center; 
-	justify-content: space-between;
-	padding: 0 100px;
-	display: flex;
-}
-header nav, header ul { display: flex; }
-header nav ul { font-size: 18px; font-weight: bold; }
-header nav ul li:not(:first-child) { margin-left: 50px; }
-header nav li a.active, header nav li a:hover { color: #0040ff; font-weight: bold; }
-header div li:not(:first-child){ margin-left: 5px; }
+	header {
+		border-bottom: 1px solid #aaa;
+		align-items: center; 
+		justify-content: space-between;
+		padding: 0 100px;
+		display: flex;
+	}
+	header nav, header ul { display: flex; }
+	header nav ul { font-size: 18px; font-weight: bold; }
+	header nav ul li:not(:first-child) { margin-left: 50px; }
+	header nav li a.active, header nav li a:hover { color: #0040ff; font-weight: bold; }
+	header div li:not(:first-child){ margin-left: 5px; }
 </style>
 <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>  -->
 <header>
@@ -40,6 +40,7 @@ header div li:not(:first-child){ margin-left: 5px; }
 		<!-- 로그인한 경우 -->
 		<c:if test="${not empty loginInfo}">
 			<li><strong>${loginInfo.name}</strong></li>
+			<li><a class='btn-fill' href='changePW'>비밀번호변경</a></li>
 			<li><a class='btn-fill' href='logout'>로그아웃</a></li>
 		</c:if>
 	</ul>

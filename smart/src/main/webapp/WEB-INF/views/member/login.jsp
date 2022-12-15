@@ -8,12 +8,14 @@
 </head>
 <body>
 	<div class='center'>
+		<a href='<c:url value="/"/>'><img src='img/hanul.logo.png'></a>
 		<div class='box'>
 			<ul>
 				<li><input type='text' id='userid' class='chk' placeholder='아이디'></li>
 				<li><input type='password' id='userpw' class='chk' placeholder='비밀번호'></li>
 				<li><input type='button' value='로그인' class='login'></li>
 			</ul>
+			<div><a href='find'>비밀번호 찾기</a></div>
 		</div>
 	</div>
 	<script>

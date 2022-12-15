@@ -4,7 +4,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
 import org.springframework.stereotype.Service;
+
+import member.MemberVO;
 
 @Service
 public class CommonService {
@@ -43,5 +47,43 @@ public class CommonService {
 			e.printStackTrace();
 		}
 		return pw;
+	}
+	
+	// 임시 비번 이메일 전송 처리 - 암호화 후 데이터: vo, 암호화 전 데이터: pw
+	public boolean sendPassword(MemberVO vo, String pw) {
+		boolean send = true;
+		HtmlEmail mail = new HtmlEmail();
+		mail.setCharset("UTF-8");
+		//mail.setDebug(true); // 콘솔에서 메일 전송되어지는 과정 확인용 - 확인 후 주석 처리할 것
+		
+		mail.setHostName("smtp.naver.com");	// 이메일 서비스 서버지정
+		mail.setAuthentication("yd5726", "KMJ30103yd"); // 관리자 이메일 주소, 비번
+		mail.setSSLOnConnect(true);	// 로그인 버튼 클릭
+		
+		try {
+			mail.setFrom("yd5726@naver.com" ,"스마트 웹&앱 관리자"); // 메일 전송자 이메일
+			mail.addTo(vo.getEmail(), vo.getName()); // 메일 수신자 지정
+			
+			// 이메일 작성
+			mail.setSubject("스마트 웹&앱 로그인 임시 비밀번호 확인");
+			StringBuffer msg = new StringBuffer();
+			msg.append("<html>");
+			msg.append("<body>");
+			msg.append("<h3>[").append(vo.getName()).append("] 임시 비밀번호</h3>");
+			msg.append("<div>임시 비밀번호가 발급되었습니다.</div>");
+			msg.append("<div>아래 비밀번호로 로그인하신 후 비밀번호를 변경하세요.</div>");
+			msg.append("<div>임시 비밀번호: <strong>").append(pw).append("</strong></div>");
+			msg.append("</body>");
+			msg.append("</html>");
+			mail.setHtmlMsg(msg.toString());
+			
+			mail.send(); // 이메일 전송 버튼 클릭
+			
+		} catch (Exception e) {
+			send = false;
+			e.printStackTrace();
+		}
+		
+		return send;
 	}
 }
