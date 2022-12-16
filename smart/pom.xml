@@ -194,6 +194,14 @@
     		<artifactId>commons-email</artifactId>
     		<version>1.5</version>
 		</dependency>
+		
+		<!-- JSON In Java - 소셜로그인 -->
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+    		<groupId>org.json</groupId>
+    		<artifactId>json</artifactId>
+    		<version>20220924</version>
+		</dependency>
 
 	</dependencies>
     <build>

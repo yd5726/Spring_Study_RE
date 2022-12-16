@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div class='box'>
-		<form method='post' action='reset'>
+		<form method='post' action='changePassword'>
 			<ul>
 				<li>
 					<input type='password' name='userpw' class='chk' placeholder='새 비밀번호'>
@@ -25,11 +25,54 @@
 	</div>
 	<script src='js/member.js?<%=new java.util.Date()%>'></script>
 	<script>
+		// 방법 2) 태그 정보로 판단 - hong2022A 테스트 오류 해결
 		$('[type=password]').keyup(function(){
+			if( $(this).attr('name') == 'userpw' ){
+				var equal = $(this).val()==$('[name=userpw_ck]').val();
+				$('[name=userpw_ck]').siblings('div')
+					.removeClass('valid invalid')
+					.addClass( equal ? 'valid' : 'invalid' )
+					.text(equal ? '비밀번호가 일치' : '비밀번호가 불일치');
+			}
 			var status = member.tag_status( $(this) );
 			$(this).siblings('div').text( status.desc )
-				.removeClass('valid invalid').addClass( status.code );		
+				.removeClass('valid invalid').addClass( status.code );
 		});
+		$('.password').click(function(){
+			var status = member.tag_status( $(this) );
+			if(change()){
+				$('form').submit();
+			}
+		});
+		
+		// 입력 태그값이 유효한지 확인한 후 submit
+		function change(){
+			var ok = true;
+			$('[type=password]').each(function(){
+				// 방법 1) 함수 호출 결과로 판단
+				/*
+				var status = member.tag_status( $(this) );
+				if(status.code=='invalid'){
+					alert('비밀번호 변경이 불가합니다.\n' + status.desc);
+					$(this).focus();
+					ok = false;
+					return ok;
+				}
+				*/
+				// 방법 2) 태그 정보로 판단 - hong2022A 테스트 오류
+				
+				var _div = $(this).siblings('div');
+				if(_div.hasClass('invalid')){
+					alert('비밀번호 변경이 불가합니다.\n' + _div.text());
+					$(this).focus();
+					ok = false;
+					return ok;
+				}
+				
+			});
+			
+			return ok;
+		}
 	</script>
 </body>
 </html>

@@ -19,6 +19,9 @@ public interface MemberService {
 	// 마이페이지에서 회원정보 변경 저장
 	int member_myInfo_update(MemberVO vo);
 	
+	// 비밀번호 변경저장 - 임시 비번 발급, 비번 변경
+	int member_password_update(MemberVO vo);	
+	
 	// 회원 탈퇴시 회원정보 삭제
 	int member_delete(String userid);
 	

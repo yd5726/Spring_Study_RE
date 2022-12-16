@@ -37,7 +37,7 @@ public class HomeController {
 				  // 회원정보 변경 처리
 				  vo.setSalt(salt);
 				  vo.setUserpw(pw);
-				  member.member_myInfo_update(vo);
+				  member.member_password_update(vo);
 			  }
 		  }
 		*/
