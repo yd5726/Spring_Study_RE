@@ -27,6 +27,71 @@ public class MemberController {
 //	public MemberController(MemberService member) {
 //		this.member = member;
 //	}
+	
+	// 회원가입화면 요청
+	@RequestMapping("/member")
+	public String member(HttpSession session) {
+		// 카테고리 이벤트
+		session.setAttribute("caregory", "join");
+		return "member/join";
+	}
+	
+	
+	private String Kakao_REST_API_KEY = "32f08fdaa5f0e5cc5cabd7bf2dfe97d7";
+	
+	// 카카오 로그인처리 요청
+	@RequestMapping("/kakaoLogin")
+	public String kakaoLogin(HttpSession session, HttpServletRequest request) {
+		// Step1. 인가코드 받기
+		// 		  - Request
+		//		  - Response : code, state
+		// https://kauth.kakao.com/oauth/authorize?response_type=code
+		// &client_id=${REST_API_KEY}
+		// &redirect_uri=${REDIRECT_URI}
+		// REST API 키 : 32f08fdaa5f0e5cc5cabd7bf2dfe97d7	
+
+		StringBuffer url = new StringBuffer("https://kauth.kakao.com/oauth/authorize?response_type=code");
+		url.append("&client_id=").append(Kakao_REST_API_KEY);
+		url.append("&redirect_uri=").append(common.appURL(request)).append("/kakaocallback");
+		request.setAttribute("url", url.toString());
+
+		// 소셜 로그인 동의항목 재동의 요청
+		url.append("&auth_type=reprompt");
+		return "redirect:" + url.toString(); // /kakaocallback
+	}
+	
+	// 카카오 콜백 처리
+	@RequestMapping("/kakaocallback")
+	public String kakaocallback(String code, HttpSession sessioin) {
+		// Step1. 인가코드 받기
+		//		  - Request
+		// 		  - Response : code
+		if( code==null ) {
+			return "redirect:/";
+		}
+		
+		StringBuffer url = new StringBuffer(
+				"https://kauth.kakao.com/oauth/token?grant_type=authorization_code");
+			url.append("&client_id=")
+				.append(Kakao_REST_API_KEY);
+			url.append("&code=").append(code);
+		
+		// Step2. 토큰 받기
+		// curl -v -X POST "https://kauth.kakao.com/oauth/token" \
+		//  -H "Content-Type: application/x-www-form-urlencoded" \
+		//  -d "grant_type=authorization_code" \
+		//  -d "client_id=${REST_API_KEY}" \
+		//  --data-urlencode "redirect_uri=${REDIRECT_URI}" \
+		//  -d "code=${AUTHORIZE_CODE}"	
+			
+		//String tokens = CommonUtility.requestAPI(url.toString());
+		//JSONObject json = new JSONObject(tokens);
+		//String token_type = json.getString("token_type");
+		//String access_token = json.getString("access_token");
+		
+		return "redirect:/";
+	}
+	
 	private String NaverClientId = "ZoxO0ftx00JuKNVrs8uv";
 	private String NaverClinentSecret = "DcyduAhpqN";
 	
@@ -107,9 +172,10 @@ public class MemberController {
 				vo.setName(jsonValue("name", json,"이름없음"));
 			}
 			vo.setEmail(jsonValue("email", json));
-			vo.setGender( jsonValue("gender", json, "M").equals("M") ? "남" : "여" );
-			vo.setProfile( jsonValue("profile_image", json));
-			vo.setPhone( jsonValue("mobile", json));
+			vo.setGender(jsonValue("gender", json, "M").equals("M") ? "남" : "여");
+			vo.setProfile(jsonValue("profile_image", json));
+			vo.setPhone(jsonValue("mobile", json));
+			/* vo.setBirth(jsonValue("birthday", json)); */
 			
 			if(member.member_idCheck(vo.getUserid())==1) { //update
 				member.member_myInfo_update(vo);
@@ -130,6 +196,15 @@ public class MemberController {
 	private String jsonValue(String key, JSONObject json, String defaultValue) {
 		return json.has(key) ? json.getString(key) : defaultValue;
 	}
+	
+	// 아이디 중복확인 요청 (@ResponseBody : 이 자체가 응답이다. 화면 응답 아님.)
+	@ResponseBody @RequestMapping("/idCheck")
+	public boolean idCheck(String id) {
+		// 비지니스 로직
+		// 화면에서 입력한 아이디가 DB에 존재하는지 확인 : 0이면 아이디가 존재x, 1이면 아이디가 존재o
+		return member.member_idCheck(id) == 0 ? false : true;
+	}
+	
 	
 	// 비밀번호 변경 처리 요청
 	@RequestMapping("/changePassword")

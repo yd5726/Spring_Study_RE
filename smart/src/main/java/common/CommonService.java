@@ -130,7 +130,7 @@ public class CommonService {
 		//mail.setDebug(true); // 콘솔에서 메일 전송되어지는 과정 확인용 - 확인 후 주석 처리할 것
 		
 		mail.setHostName("smtp.naver.com");	// 이메일 서비스 서버지정
-		mail.setAuthentication("yd5726", "KMJ30103yd"); // 관리자 이메일 주소, 비번
+		mail.setAuthentication("yd5726", "minju9797!"); // 관리자 이메일 주소, 비번
 		mail.setSSLOnConnect(true);	// 로그인 버튼 클릭
 		
 		try {

@@ -43,7 +43,7 @@
 		where userid = #{userid}
 	</update>
 	
-	<!-- 회원의 slat 조회 -->
+	<!-- 회원의 salt 조회 -->
 	<select id="salt" resultType="String">
 		select salt from member where userid = #{userid}
 	</select>
