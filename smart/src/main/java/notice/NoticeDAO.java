@@ -3,19 +3,17 @@ package notice;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class NoticeDAO implements NoticeService{
-	private SqlSession sql;
-	public NoticeDAO(@Qualifier("hanul") SqlSession sql) {
-		this.sql = sql;
-	}
+public class NoticeDAO implements NoticeService {
+	@Qualifier("hanul") @Autowired private SqlSession sql;
+
 	@Override
 	public int notice_insert(NoticeVO vo) {
-		sql.insert("notice.insert", vo);
-		return 0;
+		return sql.insert("notice.insert", vo);
 	}
 
 	@Override
@@ -25,29 +23,22 @@ public class NoticeDAO implements NoticeService{
 
 	@Override
 	public NoticeVO notice_info(int id) {
-		return sql.selectOne("notice.selected", id);
+		return sql.selectOne("notice.info", id);
+	}
+
+	@Override
+	public int notice_read(int id) {
+		return sql.update("notice.read", id);
 	}
 
 	@Override
 	public int notice_update(NoticeVO vo) {
-		sql.update("notice.update", vo);
-		return 0;
+		return sql.update("notice.update", vo);
 	}
 
 	@Override
 	public int notice_delete(int id) {
-		sql.delete("notice.delete", id);
-		return 0;
-	}
-	@Override
-	public List<NoticeVO> hanul_notice_list() {
-		return sql.selectList("notice.writer_list");
+		return sql.delete("notice.delete", id);
 	}
 	
-	@Override
-	public int notice_read(int id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

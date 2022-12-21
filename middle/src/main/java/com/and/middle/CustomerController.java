@@ -28,9 +28,11 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/andVo", produces ="text/html;charset=UTF-8")
-	public String andVo() {
+	public String andVo(String data) {
+		System.out.println(data);
 		List<CustomerVO> list = session.selectList("test.customer_list");
 		
 		return new Gson().toJson(list.get(0));
 	}
+	
 }

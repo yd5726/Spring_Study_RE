@@ -6,16 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("notice")
-public class NoticeServiceImpl implements NoticeService{
+public class NoticeServiceImpl implements NoticeService {
 	@Autowired private NoticeDAO dao;
-	public NoticeServiceImpl(NoticeDAO dao) {
-		this.dao = dao;
-	}
 	
 	@Override
 	public int notice_insert(NoticeVO vo) {
-		dao.notice_insert(vo);
-		return 0;
+		return dao.notice_insert(vo);
 	}
 
 	@Override
@@ -29,26 +25,18 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
+	public int notice_read(int id) {
+		return dao.notice_read(id);
+	}
+
+	@Override
 	public int notice_update(NoticeVO vo) {
-		dao.notice_update(vo);
-		return 0;
+		return dao.notice_update(vo);
 	}
 
 	@Override
 	public int notice_delete(int id) {
-		dao.notice_delete(id);
-		return 0;
-		
+		return dao.notice_delete(id);
 	}
 
-	@Override
-	public List<NoticeVO> hanul_notice_list() {
-		return dao.hanul_notice_list();
-	}
-
-	@Override
-	public int notice_read(int id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }

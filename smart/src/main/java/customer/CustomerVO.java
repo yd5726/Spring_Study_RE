@@ -1,8 +1,9 @@
 package customer;
-/* DB : hanul */
+
 public class CustomerVO {
 	private int id;
 	private String name, email, phone, gender;
+	
 	public int getId() {
 		return id;
 	}
@@ -33,4 +34,5 @@ public class CustomerVO {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
 }
