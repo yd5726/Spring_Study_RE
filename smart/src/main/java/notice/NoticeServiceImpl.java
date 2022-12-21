@@ -2,19 +2,17 @@ package notice;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("notice")
-public class NoticeServiceImpl implements NoticeService{
-	private NoticeDAO dao;
-	public NoticeServiceImpl(NoticeDAO dao) {
-		this.dao = dao;
-	}
+public class NoticeServiceImpl implements NoticeService {
+	@Autowired private NoticeDAO dao;
 	
 	@Override
-	public void notice_insert(NoticeVO vo) {
-		dao.notice_insert(vo);
-		
+	public int notice_insert(NoticeVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
@@ -23,23 +21,24 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public NoticeVO notice_selected(int id) {
-		return dao.notice_selected(id);
+	public NoticeVO notice_info(int id) {
+		return dao.notice_info(id);
 	}
 
 	@Override
-	public void notice_update(NoticeVO vo) {
-		dao.notice_update(vo);
+	public int notice_read(int id) {
+		return dao.notice_read(id);
 	}
 
 	@Override
-	public void notice_delete(int id) {
-		dao.notice_delete(id);
-		
+	public int notice_update(NoticeVO vo) {
+		return dao.notice_update(vo);
 	}
 
 	@Override
-	public List<NoticeVO> hanul_notice_list() {
-		return dao.hanul_notice_list();
+	public int notice_delete(int id) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
+
 }

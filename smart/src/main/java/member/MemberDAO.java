@@ -27,14 +27,14 @@ public class MemberDAO implements MemberService {
 	}
 
 	@Override
-	public int member_idCheck(String userid) {
-		return sql.selectOne("member.idCheck", userid);
-	}
-
-	@Override
 	public MemberVO member_myInfo(String userid) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int member_idCheck(String userid) {
+		return sql.selectOne("member.idCheck", userid);
 	}
 
 	@Override
