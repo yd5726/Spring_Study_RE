@@ -18,6 +18,7 @@
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/js/**" location="/resources/js/" />
 	<resources mapping="/img/**" location="/resources/images/" />
+	<resources mapping="/upload/**" location="/resources/upload/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -38,5 +39,8 @@
 		<beans:property name="definitions" 
 						value="/WEB-INF/views/tiles/config.xml"/>
 	</beans:bean>
-	
+	<beans:bean id='multipartResolver'
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value='UTF-8'></beans:property>
+	</beans:bean>
 </beans:beans>

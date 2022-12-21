@@ -11,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import common.CommonService;
 import member.MemberService;
 import member.MemberVO;
-import oracle.net.aso.j;
 
 
 @Controller
@@ -27,7 +27,35 @@ public class MemberController {
 //	public MemberController(MemberService member) {
 //		this.member = member;
 //	}
-	
+	// 회원가입처리 요청 (@ResponseBody = 이 자체가 응답) alert 인코딩
+	@ResponseBody @RequestMapping(value = "/join",
+			produces="text/html; charset=UTF-8")
+	public String join(MemberVO vo, MultipartFile profile_image ,HttpServletRequest request) {
+		// 첨부된 프로필 파일이 있는 경우
+		if(! profile_image.isEmpty()) {
+			// 서버의 물리적 영역에 첨부 파일을 저장한 후 DB에 저장할 수 있도록 처리한다.
+			vo.setProfile(common.fileUpload("profile", profile_image, request));
+		}
+		// 화면에서 입력한 정보를 DB에 신규저장한다.
+		// 입력한 비번을 암호하 처리
+		String salt = common.generateSalt();
+		String userpw = common.getEncrypt(salt,vo.getUserpw());
+		vo.setSalt(salt);
+		vo.setUserpw(userpw);
+		StringBuffer msg = new StringBuffer("<script>");
+		if( member.member_join(vo) == 1) {
+			msg.append("alert('회원가입을 축하합니다. ^^'); location='")
+				.append(request.getContextPath())
+				.append("';");
+		}else {
+			msg.append("alert('회원가입을 실패하셨습니다..ㅠ'); history.go(-1);");
+		}
+		msg.append("</script>");
+		
+		// 응답화면연결
+		return msg.toString();
+	}
+		
 	// 회원가입화면 요청
 	@RequestMapping("/member")
 	public String member(HttpSession session) {

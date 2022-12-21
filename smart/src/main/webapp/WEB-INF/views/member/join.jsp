@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,11 @@
 <body>
 	<h3>회원 가입</h3>
 	<p>*는 필수 입력 항목입니다.</p>
-	<form method='post' action='join'>
+	<!-- 파일 업로드하기위한 form 태그의 주의사항
+		1. form의 method는 반드시 post
+		2. 파일을 첨부해서 보낸다는 지정: enctype='multipart/form-data'
+	 -->
+	<form method='post' action='join' enctype='multipart/form-data'>
 		<table class='w-px600'>
 			<tr><th class='w-px140'><span>*</span>성명</th>
 				<td><input type='text' name='name' autofocus></td>
@@ -31,13 +36,13 @@
 			</tr>
 			<tr><th><span>*</span>비밀번호</th>
 				<td>
-					<input type='password' name='userpw'>
+					<input type='password' name='userpw' class='chk'>
 					<div class='valid'>비밀번호를 입력하세요(영문대/소문자, 숫자 모두 포함)</div>
 				</td>
 			</tr>
 			<tr><th>비밀번호 확인</th>
 				<td>
-					<input type='password' name='userpw_ck'>
+					<input type='password' name='userpw_ck' class='chk'>
 					<div class='valid'>비밀번호를 다시 입력하세요</div>
 				</td>
 			</tr>
@@ -58,7 +63,7 @@
 					<label><input type='radio' name='gender' value='여'>여</label>
 				</td>
 			</tr>
-			<tr><th>이메일</th>
+			<tr><th><span>*</span>이메일</th>
 				<td>
 					<input type='text' name='email' class='chk'>
 					<div class='valid'>이메일을 입력하세요</div>
@@ -83,12 +88,69 @@
 			</tr>
 		</table>
 	</form>
+	<div class='btnSet'>
+		<a class='btn-fill join'>회원가입</a>
+		<a class='btn-empty' href='<c:url value="/"/>'>취소</a>
+	</div>
 	<!-- 생년월일 - https://jqueryui.com/datepicker/ -->
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	<!-- 주소 - https://postcode.map.daum.net/guide -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src='js/member.js?<%=new java.util.Date()%>'></script>
 	<script>
+		// 회원가입 버튼 클릭 이벤트
+		$('.join').click(function(){
+			if($.trim($('[name=name]').val())==''){
+				alert('성명을 입력하세요.');
+				$('[name=name]').focus();
+				$('[name=name]').val('');
+				return;
+			}
+			// 유효성 확인
+			// 중복 확인했고 이미 사용중인 경우 가입 불가
+			// 중목 확인하지 않은 경우 가입 불가
+			var _userid = $('[name=userid]');
+			if(_userid.hasClass('chked')){
+				if(_userid.siblings('div').hasClass('invalid')){
+					alert('회원 가입 불가!\n'+member.userid.unUsable.desc);
+					_userid.focus();
+					return;
+				}
+			}else{
+				if(tagIsInvalid(_userid)){
+					return;
+				}else{
+					// 중복 확인하지 않아서 회원 가입 불가
+					alert('회원 가입 불가!\n'+member.userid.valid.desc);
+					_userid.focus();
+					return;
+				}
+			}
+			
+			
+			if(tagIsInvalid( $('[name=userpw]') )){
+				return;
+			}
+			if(tagIsInvalid( $('[name=userpw_ck]') )){
+				return;
+			}
+			if(tagIsInvalid( $('[name=email]') )){
+				return;
+			}
+			$('form').submit();
+		});
+		
+		// 유효성 확인 함수
+		function tagIsInvalid(tag){
+			var status = member.tag_status(tag);
+			if(status.code=='invalid'){
+				alert('회원가입 불가!\n' + status.desc);
+				tag.focus();
+				return true;
+			}else{
+				return false;
+			}
+		}
 		// 다음 우편번호 찾기 API로 우편번호와 기본주소를 조회한다.
 		$('#post').click(function(){
 			new daum.Postcode({
@@ -147,7 +209,7 @@
 		function idCheck(){
 			var $userid = $('[name=userid]');
 			// 이미 중복확인했다면 재확인이 불필요하다.
-			if($userid_hasClass('chked')){
+			if($userid.hasClass('chked')){
 				return;
 			}
 			

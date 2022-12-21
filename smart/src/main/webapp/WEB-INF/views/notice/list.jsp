@@ -10,7 +10,10 @@
 	<h3>공지사항</h3>
 	<div id='list-top'>
 		<ul>
-			<li><a class='btn-fill' href='new.no'>새 공지글 등록</a></li>
+			<!-- 관리자 회원으로 로그인한 경우만 글쓰기 가능 -->
+			<c:if test='${loginInfo.admin eq "Y" }'>
+				<li><a class='btn-fill' href='new.no'>새 공지글 등록</a></li>
+			</c:if>
 		</ul>
 	</div>
 	<div class='tb-wrap w-px800'>
@@ -36,6 +39,7 @@
 					<td><a href='selected.no?id=${vo.id}'>${vo.title}</a></td>
 					<td>${vo.content}</td>
 					<td>${vo.writer}</td>
+					<%-- <td>${vo.name}</td> --%>
 					<td>${vo.writedate}</td>
 					<td>${vo.readcnt}</td>
 				</tr>

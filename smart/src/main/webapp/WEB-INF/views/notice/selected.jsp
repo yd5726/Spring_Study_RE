@@ -29,8 +29,11 @@
 		</tr>
 	</table>
 	<div class='btnSet'>
-		<a class='btn-fill' href='modify.no?id=${vo.id}'>공지글 수정</a>
-		<a class='btn-fill remove'>공지글 삭제</a>
+		<!-- 작성자가 로그인한 경우만 수정/삭제 가능 -->
+		<c:if test='${loginInfo.userid eq vo.writer}'>
+			<a class='btn-fill' href='modify.no?id=${vo.id}'>공지글 수정</a>
+			<a class='btn-fill remove'>공지글 삭제</a>
+		</c:if>
 		<a class='btn-fill' href='list.no'>공지글 목록</a>
 	</div>
 	<script>

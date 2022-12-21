@@ -34,8 +34,7 @@ public class NoticeController {
 	// 선택한 공지글화면 요청
 	@RequestMapping("/selected.no")
 	public String notice_selected(int id, Model model) {
-		NoticeVO vo = service.notice_selected(id);
-		model.addAttribute("vo",vo);
+		model.addAttribute("vo", service.notice_info(id));
 		
 		return "notice/selected";
 	}
@@ -56,7 +55,7 @@ public class NoticeController {
 	public String modify(int id, Model model) {
 		// 비지니스로직
 		// 선택한 고객정보를 DB에서 조회해와서
-		NoticeVO vo = service.notice_selected(id);
+		NoticeVO vo = service.notice_info(id);
 		// 수정화면에 출력할 수 있도록 Model에 attribute에 담는다.
 		model.addAttribute("vo",vo);
 		

@@ -3,15 +3,17 @@
  */
  
  $(function(){
- 	// 달력 UI 속성지정
-	$.datepicker.setDefaults({
-		dateFormat: 'yy-mm-dd',
-		dayNamesMin: ['일','월','화','수','목','금','토'],
-		monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-		showMonthAfterYear: true,	//년도 뒤에 월 표시
-		changeYear: true,
-		changeMonth: true
-	});
+ 	if($('.date').length > 0){
+ 		// 달력 UI 속성지정
+		$.datepicker.setDefaults({
+			dateFormat: 'yy-mm-dd',
+			dayNamesMin: ['일','월','화','수','목','금','토'],
+			monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			showMonthAfterYear: true,	//년도 뒤에 월 표시
+			changeYear: true,
+			changeMonth: true
+		});
+	}
 	
 	// 파일 첨부 관련 처리
 	$('#attach-file').change(function(){

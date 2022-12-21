@@ -1,22 +1,58 @@
 package common;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import member.MemberVO;
 
 @Service
 public class CommonService {
+	
+	// 첨부 파일 업로드
+	public String fileUpload(String category, MultipartFile file, HttpServletRequest request) {
+		// 업로드할 물리적 위치 지정
+		// 1) 서버 - 고정적 x
+		// String path = request.getSession().getServletContext().getRealPath("resources");
+		
+		// 2) 프로젝트 내의 물리적 영역이 아니라 고정적인 물리영역에 저장하도록 한다.
+		String path = "d://app" + request.getContextPath();
+		// /upload/myinfo/2022/12/20
+		String upload ="/upload/" + category 
+				+ new SimpleDateFormat("/yyyy/MM/dd").format(new Date());
+		path += upload;
+		
+		// 해당 폴더가 없으면 폴더를 만든다.
+		File folder = new File(path);
+		if(! folder.exists()) {
+			folder.mkdirs();
+		}
+		// 해당 폴더에 첨부한 파일을 저장한다.
+		String filename =  UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+		try {
+			file.transferTo(new File(path, filename));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// http://localhost:8080/smart/upload/profile/2022/12/20/imagefile.png
+		// D:\Study_Spring4\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\...
+		return appURL(request) + upload + "/" + filename;
+	}
 	
 	// 3.4.5 접근 토큰을 이용하여 프로필 API 호출하기
 	//curl  -XGET "https://openapi.naver.com/v1/nid/me" \
