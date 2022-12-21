@@ -2,12 +2,14 @@ package co.kr.smart;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import common.CommonService;
 import member.MemberServiceImpl;
@@ -27,6 +29,32 @@ public class NoticeController {
 	@RequestMapping("/new.no")
 	public String notice() {
 		return "notice/new";
+	}
+	
+	// 공지글 등록(신규 저장) 처리 요청
+	@RequestMapping("/insert.no")		//new.jsp name=file
+	public String insert(NoticeVO vo, MultipartFile file, HttpServletRequest request) {
+		// 첨부된 파일이 있는 경우
+		if(! file.isEmpty()) {
+			vo.setFilename(file.getOriginalFilename());
+			vo.setFilepath(common.fileUpload("notice", file, request));
+		}
+		
+		// 화면에서 입력한 공지글정보를 DB에서 신규저장한다.
+		notice.notice_insert(vo);
+		
+		// 응답화면연결 - 목록화면
+		return "redirect:list.no";
+	}
+	
+	//공지글삭제처리 요청
+	@RequestMapping("/delete.no")
+	public String delete(int id) {
+		// 선택한 공지글을 DB에서 삭제한다.
+		notice.notice_delete(id);
+		
+		// 응답화면연결 - 목록화면
+		return "redirect:list.no";
 	}
 	
 	//공지글수정저장처리 요청
