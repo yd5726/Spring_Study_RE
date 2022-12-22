@@ -1,3 +1,10 @@
+Controller 에서는 Service의 method 호출
+Service 에서는 DAO의 method 호출
+DAO 에서는 mapper의 태그 지정
+
+웹브라우저에서 주소요청 -> Controller -> Service -> DAO -> mapper
+화면으로 응답         <-            <-          <-    <-      
+
 필요한 라이브러리 검색: mvnrepository.com 
 
 DB연결에 필요한 라이브러리
@@ -39,7 +46,7 @@ Mybatis 프레임웤을 사용하기 위한 라이브러리
 		    <version>2.0.7</version>
 		</dependency>
 		
-
+=========================1209===============================
 데이터객체(VO,DTO)에 getter,setter 자동생성 라이브러리
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
@@ -63,29 +70,84 @@ Mybatis 프레임웤을 사용하기 위한 라이브러리
 http://apache.org   ->  tiles 검색: Home - Apache Tiles - Framework 클릭
 -> 
 
-											
-공지글관리 
-create table notice (
-id        number, 				/*PK*/
-title     varchar2(300), 		/*제목*/
-content   varchar2(4000), 		/*내용*/
-writer    varchar2(50),			/*작성자의 id*/
-writedate date default sysdate, /*작성일자*/
-readcnt   number default 0,     /*조회수*/
-constraint notice_id_pk primary key(id),
-constraint notice_writer_fk foreign key(writer) references member(userid)
-);		
-
+=======================tiles 정리===============================
+< tiles 만드는 법>
+	https://apache.org/
+	https://tiles.apache.org/framework/index.html
+	https://tiles.apache.org/framework/tutorial/basic/concepts.html
+	https://tiles.apache.org/framework/tutorial/basic/pages.html
 	
-notice 테이블의 pk인 id 컬럼에 적용할 시퀀스
-create sequence seq_notice
-start with 1 increment by 1 nocache;		
+< 라이브러리 다운로드 >
+	https://mvnrepository.com/artifact/org.apache.tiles/tiles-jsp/3.0.8
+	
+< 이후 설정 > 
+	view 폴더 안에 tiles 폴더 만들고 config.xml과 layout.jsp를 작성한다.
+=========================1212=================================											
+< Log4jdbc-log4j2 사용하기 > - 목적 : sql 가독성 높이기
+1) 라이브러리 추가 : log4jdbc
+	https://mvnrepository.com/search?q=log4jdbc
+	https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1
+	
+<!-- https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1 -->
+<dependency>
+    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+    <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+    <version>1.16</version>
+</dependency>
 
-트리거 없이 PK컬럼에 시퀀스값을 적용해서 insert 하기
-insert into notice(id, title, content, writer)
-values (seq_notice.nextval, '테스트 공지글', '테스트용 공지글입니다', 'admin');
-		
-notice 테이블에 데이터행 삽입저장시 pk인 id컬럼에 시퀀스값 자동적용시킬 트리거
+2) 로그 설정 파일 추가
+< log4jdbc.log4j2.properties 파일 만들어서 밑에 내용 작성 >
+log4jdbc.spylogdelegator.name=net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator
+
+3) JDBC의 연결정보 설정
+< db.properties 내용 수정>
+oracleDriver = net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+url202 = jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
+----------------------------------------------------------------------------
+Cannot find DTD, log4j.dtd 지정된 파일을 찾을 수 없습니다. - 오류 해결 방법
+< log4j.xml 내용 수정 >
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+----------------------------------------------------------------------------
+< log4j.xml 내용 작성 >
+<!-- jdbc sql 확인 -->
+	<logger name="jdbc.sqlonly">
+		<level value="info" />
+	</logger>
+	
+	<logger name="jdbc.resultsettable">
+		<level value="info" />
+	</logger>
+
+=========================1213=================================
+DB : hanul
+
+< 공지글 관리 >
+create table notice(
+id number,								/*Pk*/
+title varchar2(300), 					/*제목*/
+content varchar2(4000), 				/*내용*/
+writer varchar2(50), 					/*작성자의 userid*/
+writedate date default sysdate, 		/*작성일자*/
+readcnt number default 0, 				/*조회수*/
+constraint notice_id_pk primary key(id)
+);
+
+/*notice 테이블의 pk인 id 컬럼에 적용할 시퀀스 생성*/
+create sequence seq_notice
+start with 1 increment by 1 nocache;
+
+/*데이터 삽입*/
+insert into notice(id,title,content,writer)
+values(seq_notice.nextval,'테스트 공지글','테스트용 공지글입니다','admin');
+
+/*ORA-02291: 무결성 제약조건(HANUL.NOTICE_WRITER_FK)이 위배되었습니다- 부모 키가 없습니다*/
+insert into notice(id,title,content,writer)
+values(seq_notice.nextval,'테스트 공지글','테스트용 공지글입니다','abc');
+
+select * from notice;
+commit;
+
+/*notice 테이블에 데이터행 삽입저장시 pk인 id 컬럼에 시퀀스값 자동적용시킬 트리거 생성*/
 create or replace trigger trg_notice
 	before insert on notice
 	for each row
@@ -94,24 +156,28 @@ begin
 end;
 /
 
-트리거를 통해  PK컬럼에 시퀀스값 자동적용된 경우 insert 하기
-insert into notice(title, content, writer)
-values ('세번째 공지글', '세번째 공지글입니다', 'admin2');
-		
-update notice 
-set title = #{title}, content = #{content}
+/*데이터 업데이트*/
+update notice
+set title = #{title}, content =#{content}
 where id = #{id}
-		
-		
-		
-암호화에 사용할 salt 컬럼 추가
-alter table member add ( salt varchar2(300) );
 
-salt: 비밀번호를 해시 처리하는 단방향 함수의 추가 입력에 사용되는 랜덤값
-회원가입시 비밀번호를 암호화하고, 암호화에 사용한 salt 와 암호화된 비밀번호를 저장하도록 한다
- 
-       암호화           복호화
+=========================1214=================================
+/*암호화에 사용할 salt 컬럼 추가*/
+alter table member add(salt varchar2(300));
+
+salt: 비밀번호를 해시 처리하는 "단방향" 함수의 추가 입력에 사용되는 랜덤값 => 단방향이라 복호화가 안됨
+회원가입시 비밀번호를 암호화하고, 암호화에 사용한 salt 와 암호화된 비밀번호를 저장하도록 한다.
+=> 그래서 비번 분실 시 임시 비밀번호 보내줌
+
+       암호화         복호화
 manager -> afalgfhag -> manager
+				
+[[[[계속]]]]
+		
+		
+		
+		
+		
 		
 		
 		
