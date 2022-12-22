@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h3>공지사항</h3>
-	<div id='list-top'>
+	<div id='list-top' class='w-px1200'>
 		<ul>
 			<!-- 관리자 회원으로 로그인한 경우만 글쓰기 가능 -->
 			<c:if test='${loginInfo.admin eq "Y" }'>
@@ -16,38 +16,36 @@
 			</c:if>
 		</ul>
 	</div>
-	<div class='w-px1200'>
-		<table class='tb-list'>
-			<colgroup>
-				<col width='100px'>
-				<col>
-				<col width='140px'>
-				<col width='160px'>
-				<col width='80px'>
-			</colgroup>
+	<table class='w-px1200 tb-list'>
+		<colgroup>
+			<col width='100px'>
+			<col>
+			<col width='140px'>
+			<col width='160px'>
+			<col width='80px'>
+		</colgroup>
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>작성일자</th>
+			<th>첨부파일</th>	
+		</tr>
+		<c:forEach items="${list}" var='vo'>
 			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일자</th>
-				<th>첨부파일</th>	
+				<td>${vo.no}</td>
+				<td class='text-left'>
+					<a href='selected.no?id=${vo.id}'>${vo.title}</a>
+				</td>
+				<td>${vo.name}</td>
+				<td>${vo.writedate}</td>
+				<td>
+					<c:if test='${!empty vo.filename}'>
+						<i class='font-c fa-solid fa-paperclip'></i>
+					</c:if>
+				</td>
 			</tr>
-			<c:forEach items="${list}" var='vo'>
-				<tr>
-					<td>${vo.no}</td>
-					<td class='text-left'>
-						<a href='selected.no?id=${vo.id}'>${vo.title}</a>
-					</td>
-					<td>${vo.name}</td>
-					<td>${vo.writedate}</td>
-					<td>
-						<c:if test='${!empty vo.filename}'>
-							<i class='font-c fa-solid fa-paperclip'></i>
-						</c:if>
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</div>
+		</c:forEach>
+	</table>
 </body>
 </html>
