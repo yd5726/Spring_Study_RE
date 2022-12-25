@@ -39,4 +39,9 @@ public class NoticeServiceImpl implements NoticeService{
 	public int notice_read(int id) {
 		return dao.notice_read(id);
 	}
+
+	@Override
+	public NoticePageVO notice_list(NoticePageVO page) {
+		return dao.notice_list(page);
+	}
 }

@@ -10,6 +10,9 @@ public interface NoticeService {
 	// 공지글 목록 조회 - R
 	List<NoticeVO> notice_list();
 	
+	// 페이지처리한 공지글 목록조회
+	NoticePageVO notice_list(NoticePageVO page);
+	
 	// 선택한 공지글 조회 - R
 	NoticeVO notice_selected(int id);
 	

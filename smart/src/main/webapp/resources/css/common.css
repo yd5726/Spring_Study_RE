@@ -24,6 +24,9 @@ table a:hover { font-weight: bold; text-decoration: underline; }
 .font-b { font-size: 20px; color:#3367d6 }
 .font-c { font-size: 20px; color:#333 }
 
+div.align { display: flex; align-items: center; }
+div.align > * { margin-right: 10px; }
+
 #delete, #attach-file, #delete-file { display: none; }
 .date + #delete { position: relative; right: 40px; }
 
@@ -119,6 +122,30 @@ div.invalid { color: #ff0000; font-size: 14px; font-weight: bold; }
 .text-left { text-align: left; }
 .text-right { text-align: right; }
 .text-center { text-align: center; }
+
+.page-list{
+	display: flex;
+	justify-content: center;
+	line-height: 36px;
+	margin: 10px auto;
+}
+
+.page-list a, .page-list span {
+	width: 38px;
+	height: 38px;
+	margin: 1px;
+	border: 1px solid transparent; /* 투명하게 */
+}
+
+.page-list span{
+	border: 1px solid #3367d6;
+	color: #3367d6;
+}
+
+.page-list a:hover{
+	background-color: rgba(51,103,214,0.1); /* #3367d6 투명하게 */
+	color: #3367d6;
+}
 
 .w-pct80 { width:80% }
 .w-pct60 { width:60% }

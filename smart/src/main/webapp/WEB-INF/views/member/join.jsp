@@ -108,7 +108,7 @@
 			}
 			// 유효성 확인
 			// 중복 확인했고 이미 사용중인 경우 가입 불가
-			// 중목 확인하지 않은 경우 가입 불가
+			// 중복 확인하지 않은 경우 가입 불가
 			var _userid = $('[name=userid]');
 			if(_userid.hasClass('chked')){
 				if(_userid.siblings('div').hasClass('invalid')){
