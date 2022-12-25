@@ -11,6 +11,20 @@
 	<form method='post'>
 		<div id='list-top' class='w-px1200'>
 			<ul>
+				<!-- 검색 가능 -->
+				<li>
+					<select class='w-px100' name='search'>
+						<option value='all' ${page.search eq 'all' ? 'selected':''}>전체</option>
+						<option value='title' ${page.search eq 'title' ? 'selected':''}>제목</option>
+						<option value='content' ${page.search eq 'content' ? 'selected':''}>내용</option>
+						<option value='tandc' ${page.search eq 'tandc' ? 'selected':''}>제목+내용</option>
+						<option value='writer' ${page.search eq 'writer' ? 'selected':''}>작성자</option>
+					</select>
+				</li>
+				<li><input type='text' class='w-px300' name='keyword' value='${page.keyword}'></li>
+				<li><a class='btn-fill btn-search'>검색</a></li>
+			</ul>		
+			<ul>
 				<!-- 관리자 회원으로 로그인한 경우만 글쓰기 가능 -->
 				<c:if test='${loginInfo.admin eq "Y" }'>
 					<li><a class='btn-fill' href='new.no'>글쓰기</a></li>
@@ -38,6 +52,10 @@
 			<tr>
 				<td>${vo.no}</td>
 				<td class='text-left'>
+					<span style='margin-right:${vo.indent*10}px'></span>
+					<c:if test='${vo.indent gt 0}'>
+						<i class="font-b fa-regular fa-comment-dots"></i>
+					</c:if>					
 					<a href='selected.no?id=${vo.id}'>${vo.title}</a>
 				</td>
 				<td>${vo.name}</td>
@@ -57,6 +75,11 @@
 			<td></td>
 		</c:if>
 	</table>
+	<script>
+		$('.btn-search').click(function(){
+			$('form').submit();
+		});
+	</script>
 	<jsp:include page="/WEB-INF/views/include/page.jsp"></jsp:include>
 </body>
 </html>

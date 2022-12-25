@@ -7,10 +7,13 @@ public interface NoticeService {
 	// 공지글 신규 저장 - C
 	int notice_insert(NoticeVO vo);
 	
+	// 공지글 답글 신규 저장 - C
+	int notice_reply_insert(NoticeVO vo);
+	
 	// 공지글 목록 조회 - R
 	List<NoticeVO> notice_list();
 	
-	// 페이지처리한 공지글 목록조회
+	// 페이지처리한 공지글 목록조회 - R
 	NoticePageVO notice_list(NoticePageVO page);
 	
 	// 선택한 공지글 조회 - R

@@ -58,4 +58,9 @@ public class NoticeDAO implements NoticeService{
 		return page;
 	}
 
+	@Override
+	public int notice_reply_insert(NoticeVO vo) {
+		return sql.insert("notice.reply_insert", vo);
+	}
+
 }

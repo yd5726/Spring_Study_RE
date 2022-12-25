@@ -105,11 +105,11 @@ public class NoticeController {
 		}
 	}	
 	
-	// 고객정보수정화면 요청
+	// 공지글 수정화면 요청
 	@RequestMapping("/modify.no")
 	public String modify(int id, Model model) {
 		// 비지니스로직
-		// 선택한 고객정보를 DB에서 조회해와서
+		// 선택한 공지글을 DB에서 조회해와서
 		//NoticeVO vo = service.notice_info(id);
 		// 수정화면에 출력할 수 있도록 Model에 attribute에 담는다.
 		//model.addAttribute("vo",vo);
@@ -146,7 +146,7 @@ public class NoticeController {
 		}
 		
 		// 비지니스로직
-		// 선택한 고객정보를 DB에서 변경저장한 후
+		// 선택한 공지글을 DB에서 변경저장한 후
 		service.notice_update(vo);
 	
 		// 응답화면연결
@@ -176,6 +176,7 @@ public class NoticeController {
 		// 응답화면연결
 		return "redirect:list.no";
 	}
+	
 	// 첨부파일 다운로드 요청
 	@ResponseBody @RequestMapping(value = "/download.no", produces = "text/html; charset=UTF-8")
 	public String download(int id, String url
@@ -195,4 +196,21 @@ public class NoticeController {
 			return null;
 		}
 	}
+	
+	// 답글 쓰기 화면 요청
+	@RequestMapping("/reply.no")
+	public String reply(int id, Model model) {
+		// 해당 원글의 정보를 DB에서 조회해와 답글쓰기화면에 사용할 수 있도록 Model에 담는다.
+		model.addAttribute("vo", service.notice_selected(id));
+		return "notice/reply";
+	}
+	// 답글 저장 처리 요청
+	@RequestMapping("/reply_insert.no")
+	public String reply_insert(NoticeVO vo) {
+		// 화면에서 입력한 답글정보를 DB에 신규저장한다.
+		service.notice_reply_insert(vo);
+		
+		// 응답화면 연결
+		return "redirect:list.no";
+	}	
 }

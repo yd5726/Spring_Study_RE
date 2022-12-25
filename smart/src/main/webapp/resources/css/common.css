@@ -24,8 +24,8 @@ table a:hover { font-weight: bold; text-decoration: underline; }
 .font-b { font-size: 20px; color:#3367d6 }
 .font-c { font-size: 20px; color:#333 }
 
-div.align { display: flex; align-items: center; }
-div.align > * { margin-right: 10px; }
+div.align { display: flex;  align-items: center; }
+div.align > * { margin-right: 10px; } 
 
 #delete, #attach-file, #delete-file { display: none; }
 .date + #delete { position: relative; right: 40px; }
@@ -37,7 +37,7 @@ div.align > * { margin-right: 10px; }
 .profile { width:50px; height: 50px; border-radius: 50%; }
 .font-profile { font-size: 50px; }
 select {
-	height: 34px;
+	height: 33px;
 	cursor: pointer;
 	padding-left: 10px;
 	font-size: 16px; 	
@@ -111,6 +111,7 @@ label:not(:first-child) { margin-left: 20px; }
 	transform: translate(-50%, -50%);
 }
 
+div ul li:not(:last-child) { margin-right: 5px; }
 #list-top {
 	margin: 0 auto;	display: flex; justify-content: space-between;
 }
@@ -123,28 +124,18 @@ div.invalid { color: #ff0000; font-size: 14px; font-weight: bold; }
 .text-right { text-align: right; }
 .text-center { text-align: center; }
 
-.page-list{
-	display: flex;
-	justify-content: center;
-	line-height: 36px;
-	margin: 10px auto;
+.page-list {
+	display: flex; justify-content: center; line-height: 38px; margin: 10px auto;
 }
-
 .page-list a, .page-list span {
-	width: 38px;
-	height: 38px;
-	margin: 1px;
-	border: 1px solid transparent; /* 투명하게 */
+	width: 38px; height: 38px; margin: 1px;
+	border: 1px solid transparent;
 }
-
-.page-list span{
-	border: 1px solid #3367d6;
-	color: #3367d6;
+.page-list span {
+	border: 1px solid #3367d6; color: #3367d6
 }
-
-.page-list a:hover{
-	background-color: rgba(51,103,214,0.1); /* #3367d6 투명하게 */
-	color: #3367d6;
+.page-list a:hover {
+	background-color: rgba(51, 103, 214, 0.1); color: #3367d6
 }
 
 .w-pct80 { width:80% }
@@ -172,6 +163,3 @@ div.invalid { color: #ff0000; font-size: 14px; font-weight: bold; }
 .w-px900 { width:900px }
 .w-px1000 { width:1000px }
 .w-px1200 { width:1200px }
-
-
-
