@@ -28,8 +28,7 @@ public class MemberController {
 //		this.member = member;
 //	}
 	// 회원가입처리 요청 (@ResponseBody = 이 자체가 응답) alert 인코딩
-	@ResponseBody @RequestMapping(value = "/join",
-			produces="text/html; charset=UTF-8")
+	@ResponseBody @RequestMapping(value = "/join",produces="text/html; charset=UTF-8")
 	public String join(MemberVO vo, MultipartFile profile_image ,HttpServletRequest request) {
 		// 첨부된 프로필 파일이 있는 경우
 		if(! profile_image.isEmpty()) {
@@ -37,7 +36,7 @@ public class MemberController {
 			vo.setProfile(common.fileUpload("profile", profile_image, request));
 		}
 		// 화면에서 입력한 정보를 DB에 신규저장한다.
-		// 입력한 비번을 암호하 처리
+		// 입력한 비번을 암호화 처리
 		String salt = common.generateSalt();
 		String userpw = common.getEncrypt(salt,vo.getUserpw());
 		vo.setSalt(salt);

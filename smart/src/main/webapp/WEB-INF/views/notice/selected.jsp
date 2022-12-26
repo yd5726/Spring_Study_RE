@@ -45,6 +45,10 @@
 			<a class='btn-fill' href='modify.no?id=${vo.id}'>공지글 수정</a>
 			<a class='btn-fill remove'>공지글 삭제</a>
 		</c:if>
+		<!-- 로그인한 경우 답글쓰기 가능 -->
+		<c:if test='${ ! empty loginInfo }'>
+			<a class='btn-fill' href='reply.no?id=${vo.id}'>답글쓰기</a>
+		</c:if>
 	</div>
 	<script type="text/javascript">
 		$('.remove').click(function(){
@@ -53,7 +57,7 @@
 			}
 		})
 		$('#download').on('click', function(){
-			$(this).attr('href','download.no?id=${vo.id}');
+			$(this).attr('href','download.no?id=${vo.id}&url='+ $(location).attr('href'));
 		});
 	</script>
 </body>

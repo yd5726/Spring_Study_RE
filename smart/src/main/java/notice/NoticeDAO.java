@@ -48,4 +48,19 @@ public class NoticeDAO implements NoticeService{
 		return sql.update("notice.read", id);
 	}
 
+	@Override
+	public NoticePageVO notice_list(NoticePageVO page) {
+		// 총 공지글 수를 조회
+		page.setTotalList(sql.selectOne("notice.count"));
+		// 현 페이지에 출력할 10건의 공지글 조회해서 list에 담기
+		page.setList(sql.selectList("notice.list", page));
+		
+		return page;
+	}
+
+	@Override
+	public int notice_reply_insert(NoticeVO vo) {
+		return sql.insert("notice.reply_insert", vo);
+	}
+
 }
