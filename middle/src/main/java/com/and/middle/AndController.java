@@ -17,7 +17,7 @@ public class AndController {
 	@RequestMapping("/and")
 	public String andController_test() {
 		/*selectOne("매퍼네임스페이스.아이디")*/
-		System.out.println(session.selectOne("test.test1"));
+		//System.out.println(session.selectOne("test.test1"));
 		return "test";
 	}
 }
