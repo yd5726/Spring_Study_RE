@@ -16,6 +16,7 @@ $(function(){
 		});
 	}
 
+
 	//파일첨부관련처리
 	$('#attach-file').change(function(){		
 		console.log( this.files[0] );//선택한 파일정보
@@ -35,12 +36,11 @@ $(function(){
 					}
 					reader.readAsDataURL( attached );
 				}else{
-					//프로필이미지처럼 반드시 이미지만 첨부해야 하는 경우 
+					//프로필이미지처럼 반드시 이미지만 첨부해야 하는 경우는 
 					//이미지가 아닌 파일을 선택했다면 쓰레기통이 안보이게 accept="image/*"
-					if( $(this).attr('accept')=='image/*' ){ 
-							$('#delete-file').css('display', 'none');
-							// 프로필 이미지는 이미지 파일만 저장되게 해야함
-							$('#attach-file').val('');
+					if( $(this).attr('accept')=='image/*' ) {
+						$('#delete-file').css('display', 'none');
+						$('#attach-file').val('');
 					}
 					$('#preview').empty(); //이미지가 아니면 미리보기태그만 삭제
 				}
@@ -88,3 +88,53 @@ function emptyCheck(){
 	});
 	return ok;
 } 
+
+//기존 첨부파일 태그부분을 복제해넣기
+function copyFile(){
+	var last = $('div.align').last();
+	last.after( last.clone() );
+	
+	//복제한태그를 초기화
+	last = $('div.align').last();
+	last.find('.attach-file' ).val('');
+	last.find('.file-name').text('');
+	last.find('.delete-file').css('display', 'none');
+}
+
+//첨부파일추가 태그 동적 생성
+$(document).on('change', '.attach-file', function(){
+	var attached = this.files[0];
+	var $div = $(this).closest('div');	
+	//파일을 선택한 경우
+	if( attached ){
+		//선택한 파일이 없는 경우만 기존태그를 복제해서 붙이기
+		if($div.children('.file-name').text()==''){
+			copyFile();	
+		}
+		
+		$div.children('.file-name').text( attached.name ); //선택파일명 보이게
+		$div.children('.delete-file').css('display', 'inline'); //삭제버튼 보이게
+		
+		// 이미지 파일인 경우 보여지게
+		if($div.children('.preview').length > 0){
+			if(isImage(attached.name)){
+				$div.children('.preview').html('<img>');
+				var reader = new FileReader();
+				reader.onload = function(e){
+					$div.find('.preview img').attr('src',e.target.result);
+				}
+				reader.readAsDataURL(attached);
+			}else{
+				//$div.find('.preview').empty();
+				$div.find('.preview img').remove();
+			}
+		}
+	}else{
+		// 선택창을 열었다가 취소하는 경우도 파일 삭제
+		$div.remove();
+	}
+	
+}).on('click','.delete-file', function(){
+	// 선택한 삭제버튼에 해당하는 파일 삭제
+	$(this).closest('div').remove();
+});

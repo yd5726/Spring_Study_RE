@@ -10,8 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MemberDAO implements MemberService {
-	//@Autowired @Qualifier("hanul") private SqlSession sql;
-	@Autowired @Qualifier("smart01") private SqlSession sql;
+	@Autowired @Qualifier("hanul") private SqlSession sql;
 //	private SqlSession sql;
 //	public MemberDAO(@Qualifier("hanul") SqlSession sql) {
 //		this.sql = sql;
@@ -28,14 +27,14 @@ public class MemberDAO implements MemberService {
 	}
 
 	@Override
-	public int member_idCheck(String userid) {
-		return sql.selectOne("member.idCheck", userid);
-	}
-
-	@Override
 	public MemberVO member_myInfo(String userid) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int member_idCheck(String userid) {
+		return sql.selectOne("member.idCheck", userid);
 	}
 
 	@Override

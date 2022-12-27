@@ -5,9 +5,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class PageVO {
-	//검색관련
-	private String search, keyword;
-		
+	private String search="all", keyword="", viewType="list";	// 검색 관련 필드
 	private int pageList = 10;						// 페이지당 보여질 목록 수 : 10
 	private int blockPage = 10;						// 블럭당 보여질 페이지의 수 : 10
 	private int totalList, totalPage, totalBlock;

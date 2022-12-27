@@ -13,34 +13,35 @@
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<!-- 리소스 매핑 -->
 	<resources mapping="/resources/**" location="/resources/" />
-	<resources mapping="/css/**" location="/resources/css/" />
-	<resources mapping="/js/**" location="/resources/js/" />
-	<resources mapping="/img/**" location="/resources/images/" />
-	<resources mapping="/upload/**" location="/resources/upload/" />
+	<resources location="/resources/css/" mapping="/css/**"/>
+	<resources location="/resources/js/" mapping="/js/**"/>
+	<resources location="/resources/images/" mapping="/img/**"/>
+	<resources location="/resources/upload/" mapping="/upload/**"/>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
-		<beans:property name="order" value="2"></beans:property>
+		<beans:property name="order" value='2'/>
 	</beans:bean>
-	
-	<!-- 스캐닝 대상이 되도록 선언 : root-context.xml로 customer 선언-->
-	<!-- <context:component-scan base-package="co.kr.smart, customer" /> -->
-	<context:component-scan base-package="co.kr.smart" />
-	
-	<!-- tiles 사용하겠다고 선언 -->
 	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
-		<beans:property name="order" value="1"></beans:property>
+		<beans:property name="order" value='1'/>
 	</beans:bean>
 	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<beans:property name="definitions" 
 						value="/WEB-INF/views/tiles/config.xml"/>
 	</beans:bean>
-	<beans:bean id='multipartResolver'
+	
+	<!-- 파일업로드를 위한 객체 -->
+	<beans:bean id='multipartResolver' 
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="defaultEncoding" value='UTF-8'></beans:property>
+		<beans:property name="defaultEncoding" value='utf-8'/>
 	</beans:bean>
+	
+	
+	<context:component-scan base-package="co.kr.smart" />
+	
+	
+	
 </beans:beans>
