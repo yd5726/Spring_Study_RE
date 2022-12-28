@@ -8,6 +8,8 @@ public interface BoardService {
 	BoardPageVO board_list(BoardPageVO page);
 	// 방명록 선택한 글 조회
 	BoardVO board_info(int id);
+	// 방명록에 첨부된 각 파일 정보 조회
+	BoardFileVO board_file_info(int id);
 	// 방명록 글 조회수 처리
 	int board_read(int id);
 	// 방명록 선택한 글 변경 저장

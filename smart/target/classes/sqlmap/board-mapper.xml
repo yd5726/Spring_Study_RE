@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
+<!-- 방명록 정보 삭제 -->
+<delete id='delete'>
+	delete from board where id = #{id}
+</delete>
+
+<!-- 방명록 각 첨부파일정보 조회 -->
+<select id="fineInfo" resultType="board.BoardFileVO">
+	select * from board_file where id = #{id}
+</select>
+
 <!-- 방명록 첨부파일저장 -->
 <insert id="fileInsert">
 	<foreach item="item"  collection="fileList"
@@ -67,5 +77,4 @@ from ( select row_number() over(order by id) no, name, b.*
 where no between ${beginList} and ${endList}	   
 order by no desc
 </select>
-
 </mapper>

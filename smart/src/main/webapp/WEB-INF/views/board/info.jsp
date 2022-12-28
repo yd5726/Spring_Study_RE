@@ -36,10 +36,13 @@
 		<tr><th>첨부파일</th>
 			<td colspan='5'>
 				<c:forEach items='${vo.fileList}' var='file'>
-				<div class='align'>
-					<span>${file.filename}</span>
-					<span class='preview'></span>
-				</div>	
+					<div class='align'>
+						<span>
+							${file.filename}
+							<a class='download' data-file='${file.id}'><i class="font-b fa-solid fa-file-arrow-down"></i></a>
+						</span>
+						<span class='preview'></span>
+					</div>	
 				</c:forEach>
 			</td>
 		</tr>
@@ -52,6 +55,9 @@
 	</div>
 
 	<form method='post'>
+		<input type='hidden' name='id' value='${vo.id}'>
+		<input type='hidden' name='url'>
+		<input type='hidden' name='file'>
 		<input type='hidden' name='curPage' value='${page.curPage}'>
 		<input type='hidden' name='search' value='${page.search}'>
 		<input type='hidden' name='keyword' value='${page.keyword}'>
@@ -72,9 +78,26 @@
 		$('#popup,#popup-background').css('display', 'block');
 		$('#popup').append($(this).clone());
 	});
+	$('#popup-background').on('click', function(){
+		$('#popup').empty();
+		$('#popup,#popup-background').css('display', 'none');
+	});
+	$('.download').on('click', function(){
+		$('[name=url]').val($(location).attr('href'));
+		$('[name=file]').val($(this).data('file'));
+		$('form').attr('action', 'download.bo').submit();
+	});
 	$('.list').on('click', function(){
 		$('form').attr('action', 'list.bo');
 		$('form').submit();
+	});
+	$('.remove').on('click', function(){
+		if(confirm('정말 삭제하시겠습니까?')){
+			$('form').attr('action', 'remove.bo').submit();
+		}
+	});
+	$('.modify').on('click', function(){
+		$('form').attr('action', 'modify.bo').submit();
 	});
 	</script>
 </body>
