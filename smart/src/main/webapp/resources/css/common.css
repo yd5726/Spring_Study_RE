@@ -16,7 +16,7 @@ table.tb-list tr { height: 38px; }
 table th, table td { border: 1px solid #b0b0b0; }
 table td { padding: 5px 10px;  }
 table th { background-color: #f6f6f6; }
-table a:hover { font-weight: bold; text-decoration: underline; }
+table a:hover, ul a:hover { font-weight: bold; text-decoration: underline; }
 
 /* 제목이 길어질때 말줄임으로 표시 */
 table.tb-list { table-layout: fixed; }

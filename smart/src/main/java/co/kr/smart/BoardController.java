@@ -23,6 +23,14 @@ public class BoardController {
 	@Autowired private BoardServiceImpl service;
 	@Autowired private CommonService common;
 	
+	// 방명록 상세화면 요청
+	@RequestMapping("/info.bo")
+	public String info(int id,BoardPageVO vo, Model model) {
+		// 선택한 방명록 글의 정보를 DB에서 조회해와 화면에 출력한다.
+		model.addAttribute("vo",service.board_info(id));
+		return "board/info";
+	}
+	
 	// 파일 저장하는 처리
 	private void attachedFile(BoardVO vo, MultipartFile file[], HttpServletRequest request) {
 		List<BoardFileVO> files = null;
