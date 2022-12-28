@@ -26,8 +26,12 @@ public class BoardController {
 	// 방명록 상세화면 요청
 	@RequestMapping("/info.bo")
 	public String info(int id,BoardPageVO vo, Model model) {
+		// 조회수 증가 처리
+		service.board_read(id);
 		// 선택한 방명록 글의 정보를 DB에서 조회해와 화면에 출력한다.
 		model.addAttribute("vo",service.board_info(id));
+		model.addAttribute("page", vo);
+		
 		return "board/info";
 	}
 	

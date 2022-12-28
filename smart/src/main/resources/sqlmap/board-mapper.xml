@@ -36,6 +36,16 @@ values ( #{title}, #{content}, #{writer} )
 	</choose>
 </sql>
 
+<!-- 선택한 방명록 글의 조회수증가처리 -->
+<update id='read'>
+	update board set readcnt = readcnt + 1  where id = #{id}
+</update>
+
+<!-- 선택한 방명록 글의 파일정보 조회 -->
+<select id='file' resultType="board.BoardFileVO">
+	select * from board_file where board_id = #{id}
+</select>
+
 <!-- 선택한 방명록 글의 정보 조회 -->
 <select id='info' resultType='board.BoardVO'>
 	select b.*, name 

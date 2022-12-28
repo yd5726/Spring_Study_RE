@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>info</title>
-	<style>
-		table td { text-align: left }
-	</style>
+<style>
+	table td { text-align: left }
+</style>
 </head>
 <body>
 	<h3>방명록 안내</h3>
-	<table class="w-px1200">
+	<table class='w-px1200'>
 		<colgroup>
 			<col width='140px'>
 			<col>
@@ -23,8 +23,7 @@
 		<tr><th>제목</th>
 			<td colspan='5'>${vo.title}</td>
 		</tr>
-		<tr>
-			<th>작성자</th>
+		<tr><th>작성자</th>
 			<td>${vo.name}</td>
 			<th>작성일자</th>
 			<td>${vo.writedate}</td>
@@ -34,10 +33,51 @@
 		<tr><th>내용</th>
 			<td colspan='5'>${vo.content}</td>
 		</tr>
-		<tr>
-			<th>첨부파일</th>
-			<td colspan='5'></td>
+		<tr><th>첨부파일</th>
+			<td colspan='5'>
+				<c:forEach items='${vo.fileList}' var='file'>
+				<div class='align'>
+					<span>${file.filename}</span>
+					<span class='preview'></span>
+				</div>	
+				</c:forEach>
+			</td>
 		</tr>
 	</table>
+	
+	<div class='btnSet'>
+		<a class='btn-fill list'>목록으로</a>
+		<a class='btn-fill modify'>정보수정</a>
+		<a class='btn-fill remove'>정보삭제</a>
+	</div>
+
+	<form method='post'>
+		<input type='hidden' name='curPage' value='${page.curPage}'>
+		<input type='hidden' name='search' value='${page.search}'>
+		<input type='hidden' name='keyword' value='${page.keyword}'>
+		<input type='hidden' name='viewType' value='${page.viewType}'>
+		<input type='hidden' name='pageList' value='${page.pageList}'>
+	</form>
+	
+	<div id='popup-background'></div>
+	<div id='popup' class='center'></div>
+	
+	<script>
+	<c:forEach items='${vo.fileList}' var='f' varStatus='state'>
+		if( isImage( '${f.filename}' ) ){
+			$('.preview').eq(${state.index}).html( '<img src="${f.filepath}">' );
+		}
+	</c:forEach>
+	$('.preview img').on('click', function(){
+		$('#popup,#popup-background').css('display', 'block');
+		$('#popup').append($(this).clone());
+	});
+	$('.list').on('click', function(){
+		$('form').attr('action', 'list.bo');
+		$('form').submit();
+	});
+	</script>
 </body>
 </html>
+
+

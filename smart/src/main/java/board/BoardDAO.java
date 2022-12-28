@@ -29,13 +29,17 @@ public class BoardDAO implements BoardService {
 
 	@Override
 	public BoardVO board_info(int id) {
-		return sql.selectOne("board.info", id);
+		// 선택한 방명록에 대한 정보 조회
+		BoardVO vo = sql.selectOne("board.info", id);
+		// 선택한 방명록에 대한 첨부 파일 조회
+		vo.setFileList(sql.selectList("board.file", id));;
+		
+		return vo;
 	}
 
 	@Override
 	public int board_read(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sql.update("board.read", id);
 	}
 
 	@Override
