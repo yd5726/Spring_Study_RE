@@ -63,6 +63,15 @@ a.btn-fill, a.btn-empty {
 	border-radius: 3px;
 }
 
+a.btn-fill-s {
+	display: inline-block;
+	padding: 1px 7px;
+	border: 1px solid #3367d6;
+	border-radius: 3px;
+	background-color: #3367d6;
+	color: #fff;
+}
+
 a.btn-fill {
 	background-color: #3367d6;
 	color: #fff;

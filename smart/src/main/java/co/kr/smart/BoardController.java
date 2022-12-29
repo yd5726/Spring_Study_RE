@@ -10,10 +10,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import board.BoardCommentVO;
 import board.BoardFileVO;
 import board.BoardPageVO;
 import board.BoardServiceImpl;
@@ -25,11 +27,48 @@ public class BoardController {
 	@Autowired private BoardServiceImpl service;
 	@Autowired private CommonService common;
 	
-	// 방명록 수정 저장 처리 요청
-	@RequestMapping("/update.bo")
-	public String update(BoardPageVO page, BoardVO vo, Model model){
-		// 화면에서 입력한 정보로 DB에 변경저장한 후
+	// 방명록 댓글 목록 화면 요청
+	@RequestMapping("/board/comment/list/{id}")	//id = board_id
+	public String comment_list(@PathVariable int id, Model model) {
+		// DB에서 댓글목록을 조해해와 목룍화면에 출력 -> Model에 담는다.
+		model.addAttribute(service.board_comment_list(id));
+		return "board/comment/comment_list";
+	}
+	
+	// 방명록 댓글 저장 처리 요청
+	@ResponseBody @RequestMapping("/board/comment/insert")
+	public boolean comment_regist(BoardCommentVO vo) {
+		// 화면에서 입력한 댓글 정보를 DB에 저장
+		return service.board_comment_insert(vo) == 1 ? true : false;
+	}
+	
+	// 방명록 수정 저장 처리 요청  // 삭제할 파일 주소 : removed = 1,2 // 새로 첨부할 파일 정보 : MultipartFile[] file
+	@RequestMapping("/update.bo")	  
+	public String update(BoardPageVO page, BoardVO vo, MultipartFile[] file
+							, String removed, Model model, HttpServletRequest request){
+		// 새로 추가 선택, 변경 선택한 파일이 있는 경우
+		if(file.length > 1) {
+			attachedFile(vo, file, request);
+		}
 		
+		// 화면에서 입력한 정보로 DB에 변경저장한 후
+		//service.board_update(vo);
+		if(service.board_update(vo) == 1) {
+			// 삭제할 첨부파일이 있는 경우
+			if(! removed.isEmpty()) {
+				// 물리적 파일 삭제하려면 DB에서 삭제하기 전에 filepath를 조회
+				List<BoardFileVO> files = service.board_info(vo.getId()).getFileList();
+				// DB에서 삭제대상인 데이터행을 삭제
+				if(service.board_file_delete(removed) > 0) {
+					// 물리적인 파일도 삭제
+					for(BoardFileVO f : files) {
+						if(removed.contains(String.valueOf(f.getId()))) {
+							common.fileDelete(f.getFilepath(), request);
+						}
+					}
+				}
+			}
+		}
 		// 응답화면연결
 		model.addAttribute("id", vo.getId());
 		model.addAttribute("url", "info.bo");
@@ -116,6 +155,8 @@ public class BoardController {
 		// 선택한 방명록 글의 정보를 DB에서 조회해와 화면에 출력한다.
 		model.addAttribute("vo",service.board_info(id));
 		model.addAttribute("page", vo);
+		model.addAttribute("crlf","\r\n");
+		model.addAttribute("lf","\n");
 		
 		return "board/info";
 	}

@@ -89,6 +89,7 @@ function emptyCheck(){
 	return ok;
 } 
 
+
 //기존 첨부파일 태그부분을 복제해넣기
 function copyFile(){
 	var last = $('div.align').last();
@@ -96,9 +97,9 @@ function copyFile(){
 	
 	//복제한태그를 초기화
 	last = $('div.align').last();
-	last.find('.attach-file' ).val('');
-	last.find('.file-name').text('');
-	last.find('.delete-file').css('display', 'none');
+	last.find( '.attach-file' ).val('');
+	last.find( '.file-name').text('');
+	last.find( '.delete-file').css('display', 'none');
 }
 
 //첨부파일추가 태그 동적 생성
@@ -106,35 +107,73 @@ $(document).on('change', '.attach-file', function(){
 	var attached = this.files[0];
 	var $div = $(this).closest('div');	
 	//파일을 선택한 경우
-	if( attached ){
+	if( attached ){	
+		removedFile( $div );
+			
 		//선택한 파일이 없는 경우만 기존태그를 복제해서 붙이기
-		if($div.children('.file-name').text()==''){
-			copyFile();	
-		}
+		if( $div.children('.file-name').text()=='' ) copyFile();
 		
 		$div.children('.file-name').text( attached.name ); //선택파일명 보이게
 		$div.children('.delete-file').css('display', 'inline'); //삭제버튼 보이게
 		
-		// 이미지 파일인 경우 보여지게
-		if($div.children('.preview').length > 0){
-			if(isImage(attached.name)){
+		//이미지파일인 경우 보여지게
+		if( $div.children('.preview').length>0 ){
+			if( isImage( attached.name ) ){
 				$div.children('.preview').html('<img>');
 				var reader = new FileReader();
 				reader.onload = function(e){
-					$div.find('.preview img').attr('src',e.target.result);
+					$div.find('.preview img').attr('src', e.target.result);
 				}
-				reader.readAsDataURL(attached);
-			}else{
-				//$div.find('.preview').empty();
+				reader.readAsDataURL( attached );
+			}else
 				$div.find('.preview img').remove();
-			}
+				//$div.find('.preview').empty();
+				//$div.find('.preview').html('');			
 		}
+		
 	}else{
-		// 선택창을 열었다가 취소하는 경우도 파일 삭제
+		//선택창을 열었다가 취소하는 경우도 파일삭제
 		$div.remove();
 	}
 	
-}).on('click','.delete-file', function(){
-	// 선택한 삭제버튼에 해당하는 파일 삭제
-	$(this).closest('div').remove();
-});
+}).on('click', '.delete-file', function(){
+	//선택한 삭제버튼에 해당하는 파일태그삭제
+	//$(this).closest('div').remove();
+	var div = $(this).closest('div');
+	removedFile( div );
+	div.remove();
+}) ;
+
+//삭제한 파일관리
+function removedFile( div ){
+	if( $('[name=removed]').length == 0 ) return;
+	var removed = $('[name=removed]').val();
+	//hidden 태그에 있는 텍스트를 배열데이터로 만들기
+	if( removed=='' ) removed = []; // [1,2] 
+	else removed = removed.indexOf(',') == -1 ?  [removed] : removed.split(',');
+	
+	if( div.data('file') )   removed.push( String(div.data('file'))  )   //DB에서 삭제해야할 정보
+	
+	removed = new Set(removed); //중복제거
+	$('[name=removed]').val( Array.from( removed ) );
+	//console.log( 'removed', removed )
+	//console.log( '태그', $('[name=removed]').val() );
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
