@@ -90,18 +90,36 @@ function hirement_top3(){
 	var unit = $('[name=unit]:checked').val();
 	$.ajax({
 		url: 'visual/hirement/top3/' + unit,
+		type: 'post',
+		contentType: 'application/json',
 		data: JSON.stringify({ begin:$('#begin').val(), end:$('#end').val() }),
 		success: function( response ){
 			console.log( response );
 			var info = [];
 			if( unit=='year' ){
-				info.push( ['부서명', '2001', '2002', '2003', '2004', '2005', '2006'
-							, '2007', '2008', '2009', '2010']  );
+				var years =['부서명'];
+				for(var year=$('#begin').val(); year<=$('#end').val(); year++){
+					years.push(year);
+				}
+				//info.push( ['부서명', '2001', '2002', '2003', '2004', '2005', '2006'
+				//			, '2007', '2008', '2009', '2010']  );
+				info.push(years);
+				
+				/*
 				$(response).each(function(){
 					info.push( new Array( this.DEPARTMENT_NAME, this.Y2001, this.Y2002
 							, this.Y2003, this.Y2004, this.Y2005, this.Y2006
 							, this.Y2007, this.Y2008, this.Y2009, this.Y2010) );
 				});
+				*/
+				$(response).each(function(){
+					years =[this.DEPARTMENT_NAME];
+					for(var year=$('#begin').val(); year<=$('#end').val(); year++){
+						years.push(this['Y'+year] ? this['Y'+year] : 0);
+					}
+					info.push(years);
+				});
+				
 			}else{
 				info.push( ['부서명', '01', '02', '03', '04', '05', '06', '07'
 							, '08', '09', '10', '12', '12'] );

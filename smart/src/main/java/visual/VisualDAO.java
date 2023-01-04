@@ -44,6 +44,14 @@ public class VisualDAO implements VisualService {
 
 	@Override
 	public List<HashMap<String, Object>> hirement_top3_year(HashMap<String, Object> map) {
+		String range = "";
+		int begin = Integer.parseInt( map.get("begin").toString() );
+		int end = Integer.parseInt( map.get("end").toString() );
+		for(int year = begin; year<=end; year++) {
+			range +=  (range.isEmpty() ? "" : ", ") +  "'"+ year +"' y" + year;
+		}
+		map.put("range", range);
+
 		return sql.selectList("visual.hirement_top3_year", map);
 	}
 
