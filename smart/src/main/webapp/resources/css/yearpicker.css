@@ -2,7 +2,7 @@
     --background-color: #fff;
     --border-color: #ccc;
     --text-color: #555;
-    --selected-text-color: rgb(56, 241, 164);
+    --selected-text-color: #3367d6; /* rgb(56, 241, 164); */
     --hover-background-color: #eee;
 }
 
@@ -38,6 +38,7 @@
 }
 
 .yearpicker-year {
+	margin: 0;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -49,7 +50,8 @@
 .yearpicker-items {
     list-style: none;
     padding: 1rem 0.5rem;
-    flex: 0 0 33.3%;
+    /* flex: 0 0 33.3%; */
+    flex: 0 0 25%;
     width: 100%;
 }
 
@@ -60,6 +62,7 @@
 }
 
 .yearpicker-items.selected {
+	background-color: var(--hover-background-color);
     color: var(--selected-text-color);
 }
 

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class VisualServiceImpl implements VisualService {
-	@Autowired private VisualDAO dao; 
+	@Autowired private VisualDAO dao;
 	
 	@Override
 	public List<HashMap<String, Object>> department() {
@@ -33,6 +33,16 @@ public class VisualServiceImpl implements VisualService {
 	@Override
 	public List<HashMap<String, Object>> hirement_top3_month() {
 		return dao.hirement_top3_month();
+	}
+
+	@Override
+	public List<HashMap<String, Object>> hirement_year(HashMap<String, Object> map) {
+		return dao.hirement_year(map);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> hirement_top3_year(HashMap<String, Object> map) {
+		return dao.hirement_top3_year(map);
 	}
 
 }

@@ -21,7 +21,7 @@
 #legend li { display: flex; align-items: center; }
 #legend li:not(:last-child) { margin-right: 30px }
 .legend { width:15px; height: 15px; margin-top: 5px; margin-right: 5px }
-	
+.year { text-align: center;}	
  
 </style>
 <link rel="stylesheet" href="css/yearpicker.css">
@@ -44,23 +44,39 @@ $(function(){
 		else         hirement();
 	});
 	
-	//클릭이벤트 강제발생
-	$('#tabs li').eq(1).trigger('click');
-	$('.legend').each(function(idx){
-		$(this).css('background-color', colors[idx]);
-	});
-	
 	$('[name=unit], #top3').change(function(){
 		//년도별 인 경우만 보이게
 		$('.year').eq(0).closest('label').css('display'
 				, $('[name=unit]:checked').val()=='year' ? 'inline' : 'none' );
 		hirement();
 	});
+	
+	// 기본 데이터 넣기
+	$('#begin').val(thisYear-9);
+	$('#end').val(thisYear);
+
 	//기본년도가 입력되어 있게
-	var thisYear = new Date().gatFullYear();
+	var thisYear = new Date().getFullYear();
+	$('#begin').yearpicker({
+		year: thisYear-9,
+		endYear: thisYear,
+	});
+	$('#end').yearpicker({
+		year: thisYear,
+		endYear: thisYear,
+	});
+	
+	//클릭이벤트 강제발생
+	$('#tabs li').eq(1).trigger('click');
+	$('.legend').each(function(idx){
+		$(this).css('background-color', colors[idx]);
+	});
 })
 
-
+// 동적 태그는 문서(document)에!
+$(document).on( 'click', '.yearpicker-items', function(){
+	hirement();	
+});
 
 //채용인원수(년도별/월별) 시각화
 function hirement(){
@@ -74,6 +90,7 @@ function hirement_top3(){
 	var unit = $('[name=unit]:checked').val();
 	$.ajax({
 		url: 'visual/hirement/top3/' + unit,
+		data: JSON.stringify({ begin:$('#begin').val(), end:$('#end').val() }),
 		success: function( response ){
 			console.log( response );
 			var info = [];
@@ -130,6 +147,9 @@ function hirement_company(){
 	var unit = $('[name=unit]:checked').val();
 	$.ajax({
 		url: 'visual/hirement/' + unit,
+		type: 'post',
+		contentType: 'application/json',
+		data: JSON.stringify({ begin:$('#begin').val(), end:$('#end').val() }),
 		success: function( response ){
 			//console.log( response )
 			var name = [ unit ], count = [ '채용인원수' ];
@@ -302,8 +322,8 @@ function line_chart(info){
 		<label><input type='checkbox' id='top3'>TOP3부서</label>
 		<label><input type='radio' name='unit' value='year' checked>년도별</label>
 		<label><input type='radio' name='unit' value='month'>월별</label>
-		<label><input type='text' id='begin' class='year w-px80' readonly> 
-				~ <input type='text' id='end' class='year w-px80' readonly>
+		<label><input type='text' id='begin' class='year w-px60' readonly> 
+				~ <input type='text' id='end' class='year w-px60' readonly>
 		</label>
 	</div>
 	<div id='graph'></div> <!-- 그래프표현할 부분 -->
@@ -326,7 +346,6 @@ function init(){
 $('[name=graph]').on('change', function(){
 	department();	
 });
-
 </script>
 </body>
 </html>
